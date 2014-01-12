@@ -102,7 +102,10 @@
         var a = document.createElement("a")
         a.href = url;
         
-        if (a.protocol === ":" || (a.protocol === window.location.protocol && a.hostname === window.location.hostname && a.port === window.location.port)) {
+        if (a.protocol === ":" || 
+            (a.protocol === window.location.protocol 
+            && a.hostname === window.location.hostname 
+            && a.port === window.location.port)) {
             result = true;
         }
         return result;
@@ -111,7 +114,9 @@
     function new_xhr(url) {
         var xhr;
         
-        if (window.XDomainRequest && !_in_origin(url) && !/^file:\/\//.test(window.location.href)) {
+        if (window.XDomainRequest 
+            && !_in_origin(url) 
+            && !/^file:\/\//.test(window.location.href)) {
             xhr = new XDomainRequest();
         } else if (window.XMLHttpRequest) {
             xhr = new XMLHttpRequest();
