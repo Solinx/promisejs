@@ -99,7 +99,7 @@
 
     function _in_origin(url) {
         var result = false;
-        var a = document.createElement("a")
+        var a = document.createElement("a");
         a.href = url;
         
         if (a.protocol === ":" || 
