@@ -97,9 +97,23 @@
         return result;
     }
 
-    function new_xhr() {
+    function _in_origin(url) {
+        var result = false;
+        var a = document.createElement("a")
+        a.href = url;
+        
+        if (a.protocol === ":" || (a.protocol === window.location.protocol && a.hostname === window.location.hostname && a.port === window.location.port)) {
+            result = true;
+        }
+        return result;
+    }
+
+    function new_xhr(url) {
         var xhr;
-        if (window.XMLHttpRequest) {
+        
+        if (window.XDomainRequest && !_in_origin(url) && !/^file:\/\//.test(window.location.href)) {
+            xhr = new XDomainRequest();
+        } else if (window.XMLHttpRequest) {
             xhr = new XMLHttpRequest();
         } else if (window.ActiveXObject) {
             try {
@@ -119,7 +133,7 @@
         headers = headers || {};
 
         try {
-            xhr = new_xhr();
+            xhr = new_xhr(url);
         } catch (e) {
             p.done(promise.ENOXHR, "");
             return p;
